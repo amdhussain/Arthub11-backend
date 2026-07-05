@@ -9,6 +9,8 @@ const orderRoutes = require('./routes/orders');
 const collectionRoutes = require('./routes/collection');
 const artworkRoutes = require('./routes/artworks');
 const commentRoutes = require('./routes/comments');
+const artistRoutes = require('./routes/artists');
+const adminRoutes = require('./routes/admin');
 const { connectToDatabase } = require('./config/db');
 
 const app = express();
@@ -52,6 +54,8 @@ app.use('/api/collection', collectionRoutes);
 app.use('/api/artworks', artworkRoutes);
 app.use('/api/artworks', commentRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/artists', artistRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {

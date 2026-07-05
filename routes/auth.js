@@ -163,7 +163,10 @@ router.post('/login', async (req, res) => {
   }
 });
 
- 
+router.post('/logout', (req, res) => {
+  return res.json({ success: true, message: 'Logged out successfully' });
+});
+
 router.post('/refresh', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
