@@ -1,5 +1,8 @@
  
 require('dotenv').config({ path: require('path').join(__dirname, '.env') });
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "FOUND" : "MISSING");
+console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "FOUND" : "MISSING");
+console.log("GOOGLE_CALLBACK_URL:", process.env.GOOGLE_CALLBACK_URL ? "FOUND" : "MISSING");
 
 const express = require('express');
 const cors = require('cors');
