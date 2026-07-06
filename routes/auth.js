@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
   try {
     console.log('📩 Signup Request Body:', req.body);
 
-    const { email, username, password, avatar } = req.body;
+    const { email, username, password, role, avatar } = req.body;
 
     if (!email || !username || !password) {
       return res.status(400).json({
@@ -55,7 +55,7 @@ router.post('/signup', async (req, res) => {
       email,
       username,
       password: hashedPassword,
-      role: 'user',
+      role: role || 'user',
       ...(avatar && { avatar }),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -69,7 +69,7 @@ router.post('/signup', async (req, res) => {
     const accessToken = signToken({
       userId,
       email,
-      role: 'user',
+      role: role || 'user',
     });
 
     console.log('🎉 Signup Successful');
@@ -81,7 +81,7 @@ router.post('/signup', async (req, res) => {
         id: userId,
         email,
         username,
-        role: 'user',
+        role: role || 'user',
         ...(avatar && { avatar }),
       },
     });
