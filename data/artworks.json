@@ -15,9 +15,17 @@
     "rating": 4.8,
     "isSold": true,
     "purchasedBy": [
-      "6a47d4780becd21fc538cbc4"
+      "6a47d4780becd21fc538cbc4",
+      "6a4d0987eb7d0f48ad654f42",
+      "6a4d1668b966fe28600ff1ba",
+      "6a4d2adbae1d604a9464299c",
+      "6a4d2adbae1d604a9464299c",
+      "6a4d2df18c48c876fac59ac7",
+      "6a4d2df18c48c876fac59ac7",
+      "6a4ddd45b3e1c3d4c55b517a",
+      "6a4e730f9bda9a1f174e218d"
     ],
-    "stock": 100
+    "stock": 92
   },
   {
     "id": 2,
@@ -58,9 +66,10 @@
     "rating": 4.9,
     "isSold": true,
     "purchasedBy": [
-      "6a475680e9e68204d87b5907"
+      "6a475680e9e68204d87b5907",
+      "6a4e730f9bda9a1f174e218d"
     ],
-    "stock": 100
+    "stock": 99
   },
   {
     "id": 4,
@@ -1348,7 +1357,10 @@
     "dimensions": "36Ã—48 in",
     "availability": true,
     "rating": 4.5,
-    "stock": 100
+    "stock": 99,
+    "purchasedBy": [
+      "6a4e30b148f09fed5ad7fe73"
+    ]
   },
   {
     "id": 83,

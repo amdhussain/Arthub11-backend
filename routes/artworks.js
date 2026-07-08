@@ -8,6 +8,19 @@ const router = express.Router();
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const ARTWORKS_FILE = path.join(DATA_DIR, 'artworks.json');
 
+const CATEGORY_MAP = {
+  'painting': 'Paintings',
+  'paintings': 'Paintings',
+  'sculpture': 'Sculptures',
+  'sculptures': 'Sculptures',
+  'photography': 'Photography',
+  'digital': 'Digital Art',
+  'digital art': 'Digital Art',
+  'printmaking': 'Printmaking',
+  'mixed-media': 'Mixed Media',
+  'mixed media': 'Mixed Media',
+};
+
 function readArtworks() {
   const raw = fs.readFileSync(ARTWORKS_FILE, 'utf8');
   return JSON.parse(raw);
@@ -44,7 +57,10 @@ router.get('/', (req, res) => {
     }
 
     if (category) {
-      artworks = artworks.filter((a) => a.category === category);
+      const mapped = CATEGORY_MAP[category.toLowerCase()] || category;
+      artworks = artworks.filter(
+        (a) => a.category === mapped || a.category?.toLowerCase() === category.toLowerCase()
+      );
     }
 
     if (sort === 'price_asc') {

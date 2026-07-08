@@ -21,7 +21,7 @@ router.post('/signup', async (req, res) => {
   try {
     console.log('📩 Signup Request Body:', req.body);
 
-    const { email, username, password, role, avatar } = req.body;
+    const { email, username, password, avatar } = req.body;
 
     if (!email || !username || !password) {
       return res.status(400).json({
@@ -55,7 +55,7 @@ router.post('/signup', async (req, res) => {
       email,
       username,
       password: hashedPassword,
-      role: role || 'user',
+      role: 'user',
       ...(avatar && { avatar }),
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -69,7 +69,7 @@ router.post('/signup', async (req, res) => {
     const accessToken = signToken({
       userId,
       email,
-      role: role || 'user',
+      role: 'user',
     });
 
     console.log('🎉 Signup Successful');
@@ -81,7 +81,7 @@ router.post('/signup', async (req, res) => {
         id: userId,
         email,
         username,
-        role: role || 'user',
+        role: 'user',
         ...(avatar && { avatar }),
       },
     });
@@ -163,10 +163,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/logout', (req, res) => {
-  return res.json({ success: true, message: 'Logged out successfully' });
-});
-
+ 
 router.post('/refresh', async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];

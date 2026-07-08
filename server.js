@@ -1,3 +1,4 @@
+ 
 require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
 const express = require('express');
@@ -7,15 +8,15 @@ const authRoutes = require('./routes/auth');
 const orderRoutes = require('./routes/orders');
 const collectionRoutes = require('./routes/collection');
 const artworkRoutes = require('./routes/artworks');
-const commentRoutes = require('./routes/comments');
 const artistRoutes = require('./routes/artists');
 const adminRoutes = require('./routes/admin');
+const commentRoutes = require('./routes/comments');
 const { connectToDatabase } = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const FRONTEND_URLS = [
+const allowedOrigins = [
   'http://localhost:3001',
   process.env.FRONTEND_URL,
 ].filter(Boolean);
@@ -23,24 +24,11 @@ const FRONTEND_URLS = [
 // Middleware
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (server-to-server, curl, mobile apps)
-    if (!origin) return callback(null, true);
-
-    // Check against explicit allowed origins
-    if (FRONTEND_URLS.includes(origin)) return callback(null, true);
-
-    // Allow any Vercel deployment (production, preview deployments, etc.)
-    if (origin.endsWith('.vercel.app')) return callback(null, true);
-
-    // Allow any Render deployment
-    if (origin.endsWith('.onrender.com') || origin.includes('onrender.com')) return callback(null, true);
-
-    // Allow all localhost origins on any port
-    if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) return callback(null, true);
-
-    // Log rejected origins for debugging
-    console.warn(`CORS blocked origin: ${origin}`);
-    return callback(null, false);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
@@ -64,9 +52,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/collection', collectionRoutes);
 app.use('/api/artworks', artworkRoutes);
-app.use('/api/comments', commentRoutes);
 app.use('/api/artists', artistRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/artworks', commentRoutes);
+app.use('/api/comments', commentRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {
@@ -94,14 +83,16 @@ async function startServer() {
 
 startServer();
 
+ 
+
 process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
+  console.error('❌ Uncaught Exception:', err);
 });
 
 process.on('unhandledRejection', (reason) => {
-  console.error('Unhandled Rejection:', reason);
+  console.error('❌ Unhandled Rejection:', reason);
 });
 
 process.on('exit', (code) => {
-  console.log(`Process exited with code ${code}`);
+  console.log(`⚠️ Process exited with code ${code}`);
 });
